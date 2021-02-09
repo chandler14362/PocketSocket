@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\PocketSocket.Abstractions\PocketSocket.Abstractions.csproj" />
+      <ProjectReference Include="..\PocketSocket.Serializers.BinaryRecords\PocketSocket.Serializers.BinaryRecords.csproj" />
+      <ProjectReference Include="..\PocketSocket\PocketSocket.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="BinaryRecords" Version="0.1.6" />
+    </ItemGroup>
+
+</Project>

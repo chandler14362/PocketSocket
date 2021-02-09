@@ -1,0 +1,31 @@
+name: NuGet
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  nuget:
+    name: https://api.nuget.org/v3/index.json
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.100
+          source-url: https://api.nuget.org/v3/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.NUGET_API_KEY}}
+      - name: Pack
+        run: |
+          dotnet pack -c Release --output nupkgs PocketSocket.Abstractions/PocketSocket.Abstractions.csproj
+          dotnet pack -c Release --output nupkgs PocketSocket/PocketSocket.csproj
+          dotnet pack -c Release --output nupkgs PocketSocket.Extensions.Hosting/PocketSocket.Extensions.Hosting.csproj
+          dotnet pack -c Release --output nupkgs PocketSocket.Serializers.BinaryRecords/PocketSocket.Serializers.BinaryRecords.csproj
+          dotnet pack -c Release --output nupkgs PocketSocket.Loggers.Serilog/PocketSocket.Loggers.Serilog.csproj
+      - name: Publish
+        run: |
+          dotnet nuget push "nupkgs/PocketSocket.*.nupkg" -k ${{secrets.NUGET_API_KEY}} --skip-duplicate
