@@ -1,8 +1,7 @@
 using System;
-using Microsoft.Extensions.DependencyInjection;
 using PocketSocket.Abstractions;
 
-namespace PocketSocket
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {

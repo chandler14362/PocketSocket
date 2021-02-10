@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using PocketSocket.Abstractions;
 
-namespace PocketSocket.Implementations
+namespace PocketSocket.Abstractions
 {
     public class BaseSocketConnection : ISocketConnection
     {

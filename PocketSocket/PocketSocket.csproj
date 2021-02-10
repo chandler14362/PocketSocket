@@ -4,7 +4,7 @@
         <TargetFramework>net5.0</TargetFramework>
         <LangVersion>9</LangVersion>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <Version>0.0.1</Version>
+        <Version>0.0.2</Version>
         <Authors>Chandler Stowell</Authors>
     </PropertyGroup>
 
@@ -15,10 +15,6 @@
     <ItemGroup>
       <PackageReference Include="Krypton.Buffers" Version="2.0.2" />
       <PackageReference Include="System.IO.Pipelines" Version="5.0.1" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Abstractions" />
     </ItemGroup>
 
 </Project>

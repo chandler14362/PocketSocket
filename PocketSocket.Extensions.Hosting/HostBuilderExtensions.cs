@@ -1,14 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using PocketSocket.Abstractions;
+using PocketSocket.Extensions.Hosting;
 using PocketSocket.Implementations;
 
-namespace PocketSocket
+namespace Microsoft.Extensions.Hosting
 {
     public static class HostBuilderExtensions
     {
@@ -89,61 +85,5 @@ namespace PocketSocket
                 services.AddSingleton(client);
                 services.AddHostedService<SocketEventHandlerImplementationBinder>();
             });
-    }
-    
-    public class SocketInterfaceImplementationBinder : IHostedService
-    {
-        private readonly IPocketSocketServer _server;
-        private readonly IReadOnlyList<ISocketInterface> _socketInterfaces;
-
-        public SocketInterfaceImplementationBinder(
-            IPocketSocketServer server, 
-            IEnumerable<ISocketInterface> socketInterfaces)
-        {
-            _server = server;
-            _socketInterfaces = socketInterfaces.ToList();
-        }
-        
-        public Task StartAsync(CancellationToken cancellationToken)
-        {
-            foreach (var socketInterface in _socketInterfaces)
-                _server.Bind(socketInterface);
-            return Task.CompletedTask;
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            foreach (var socketInterface in _socketInterfaces)
-                _server.Unbind(socketInterface);
-            return Task.CompletedTask;
-        }
-    }
-
-    public class SocketEventHandlerImplementationBinder : IHostedService
-    {
-        private readonly IPocketSocketClient _client;
-        private readonly IReadOnlyList<ISocketEventHandler> _eventHandlers;
-
-        public SocketEventHandlerImplementationBinder(
-            IPocketSocketClient client,
-            IEnumerable<ISocketEventHandler> eventHandlers)
-        {
-            _client = client;
-            _eventHandlers = eventHandlers.ToArray();
-        }
-        
-        public Task StartAsync(CancellationToken cancellationToken)
-        {
-            foreach (var eventHandler in _eventHandlers)
-                _client.Bind(eventHandler);
-            return Task.CompletedTask;
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            foreach (var eventHandler in _eventHandlers)
-                _client.Unbind(eventHandler);
-            return Task.CompletedTask;
-        }
     }
 }
